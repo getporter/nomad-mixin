@@ -1,0 +1,3 @@
+install:
+  - nomad:
+      run: "fileman.hcl"

@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "installStep": {
+      "type": "object",
+      "properties": {
+        "nomad": {"$ref": "#/definitions/nomad"}
+      },
+      "additionalProperties": false,
+      "required": [
+        "nomad"
+      ]
+    },
+    "upgradeStep": {
+      "type": "object",
+      "properties": {
+        "nomad": {"$ref": "#/definitions/nomad"}
+      },
+      "additionalProperties": false,
+      "required": [
+        "nomad"
+      ]
+    },
+    "invokeStep": {
+      "type": "object",
+      "properties": {
+        "nomad": {"$ref": "#/definitions/nomad"}
+      },
+      "additionalProperties": false,
+      "required": [
+        "nomad"
+      ]
+    },
+    "uninstallStep": {
+      "type": "object",
+      "properties": {
+        "nomad": {"$ref": "#/definitions/nomad"}
+      },
+      "additionalProperties": false,
+      "required": [
+        "nomad"
+      ]
+    },
+    "nomad": {
+      "description": "A step that is executed by the nomad mixin",
+      "type": "object",
+      "properties": {
+        "description": {
+          "description": "A description of the mixin step",
+          "type": "string"
+        },
+        "run": {
+          "description": "The name of the command to run",
+          "type": "string"
+        },
+        "meta": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "command"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "install": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/installStep"
+      }
+    },
+    "upgrade": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/upgradeStep"
+      }
+    },
+    "uninstall": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/uninstallStep"
+      }
+    }
+  },
+  "additionalProperties": {
+    "type": "array",
+    "items": {
+      "$ref": "#/definitions/invokeStep"
+    }
+  }
+}

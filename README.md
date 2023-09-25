@@ -1,111 +1,75 @@
-# A Porter Mixin Skeleton
+# Nomad Mixin for Porter
+This is a [Porter](https://porter.sh) mixin for interacting with [Nomad](https://www.nomadproject.io/).
 
-[![Build Status](https://dev.azure.com/getporter/porter/_apis/build/status/skeletor?branchName=main)](https://dev.azure.com/getporter/porter/_build/latest?definitionId=13&branchName=main)
+## Installation
+ todo
 
-This repository contains the skeleton structure of a Porter Mixin. You can clone
-this repository and use it as a starting point to build new mixins. The
-structure of this project matches closely with existing Porter [Mixins](https://porter.sh/mixins).
+## Mixin Syntax
+In your porter.yaml file, add the nomad as a mixin:
 
-1. Create a new repository in GitHub [using this repository as a
-   template](https://help.github.com/en/articles/creating-a-repository-from-a-template).
-1. Go 1.17 or higher is required. You can choose to clone into the GOPATH or not according to preference.
-1. Rename the `cmd/skeletor` and `pkg/skeletor` directories to `cmd/YOURMIXIN` and
-   `pkg/YOURMIXIN`.
-1. Find any remaining `skeletor` text in the repository and replace it with `YOURMIXIN`.
-1. In `pkg/YOURMIXIN/version.go` replace `YOURNAME` with the name you would like displayed as the mixin
-   author. This value is displayed as the author of your mixin when `porter mixins list` is run.
-1. Replace the `YOURNAME` instances in `pkg/YOURMIXIN/version_test.go` with the name used above.
-1. Run `mage build test` to try out all the make targets and
-   verify that everything executes without failing. You may need to fix a test string or two.
-1. Run `mage install` to install your mixin into the Porter home directory. If
-   you don't already have Porter installed, [install](https://porter.sh/install) it first.
-1. Now your mixin is installed, you are ready start customizing and iterating on
-   your mixin!
+```yaml
+mixins:
+  - nomad:
+```
 
-## Customize your mixin
+It supports the following global settings, which will apply to all your nomad actions, unless overridden in the action itself:
 
-This mixin is ready to wrap an existing command-line tool. The shortest path
-would be to edit `build.go` to add the instructions to download the tool
-and you are all set. It will look and feel like the [gcloud](https://porter.sh/mixins/gcloud)
-or [aws](https://porter.sh/mixins/aws) mixins, both of which are built on top of the exec mixin.
+```yaml
+mixins:
+   - nomad:
+        NOMAD_ADDR: ""
+        NOMAD_REGION: ""
+        NOMAD_NAMESPACE: ""
+        NOMAD_HTTP_AUTH: ""
 
-Edit the `Build` function in `pkg/skeletor/build.go`.
-Here you can add any Dockerfile lines that you require to download and install
-additional tools, configuration files, etc necessary for your mixin. The Build
-function should write the Dockerfile lines to `m.Out` which is a pipe from the
-mixin back to porter.
-You will also find the basic logic supporting mixin configuration.  Support for `clientVersion` is ready to go, which enables users to specify the version of the underlying tool/utility provided by the mixin, if applicable.
+        # tls
+        NOMAD_CACERT: ""
+        NOMAD_CAPATH: ""
+        NOMAD_CLIENT_CERT: ""
+        NOMAD_CLIENT_KEY: ""
+        NOMAD_TLS_SERVER_NAME: ""
+        NOMAD_SKIP_VERIFY: ""
 
-Search for `TODO` in the code and follow the instructions to customize the mixin.
+        # acl
+        NOMAD_TOKEN: ""
+```
 
-Here is an example from the aws mixin, where it downloads the latest version of
-of the aws binary and installs it:
+To use the mixin in an Install/Upgrade/Uninstall step, add the "nomad:runs" to your porter.yaml file (using Install here an example):
 
-https://github.com/getporter/aws-mixin/blob/001c19bfe06d248143353a55f07a42c913579481/pkg/aws/build.go#L7
+```yaml
+install:
+  - nomad:
+      runs:
+      - path: nomad/pytechco-redis.nomad.hcl
+      - path: nomad/pytechco-web.nomad.hcl
+      - path: nomad/pytechco-setup.nomad.hcl
+      - dispatch: pytechco-setup
+        meta:
+          budget: "200"
+      - path: nomad/pytechco-employee.nomad.hcl
+```
 
-This is enough to have a working mixin. Run `mage build install` and then test
-it out with a bundle.
+The run step supports the following 3 actions which can be specifed as a list item in the `runs` list: 
+- `path`: runs a nomad job file using the given nomad hcl file.
+- `dispatch`: dispatches a parametrized nomad job using the given job name.
+  - `meta`: (optional): a map of key/value pairs that will be passed as metadata to the nomad job.
+  - `idPrefixTemplate` (optional): a prefix added to dispathd job IDs.
+  - `payload` (optional): base64 encoded string containg the payload to pass to the nomad job. Limited to 65536 bytes.
+- `stop`: stops a nomad job using the given job name.
+  - `purge`: (optional): a boolean value that determines whether to purge the job immediately. 
 
-That will get you started but make sure to read the mixin developer
-documentation for how to create a full featured mixin:
+Each of the 3 actions above can also take in the following options, which can be passed as arguments to each individual nomad run, overriding any global nomad parameters set earlier: 
+- `address` (string): the address of the nomad server to connect to.
+- `region` (string): the region of the nomad server to connect to.
+- `namespace` (string): the namespace of the nomad server to connect to. 
+- `caCert` (string): the path to the CA cert file to use for TLS.
+- `caPath` (string): the path to a directory of CA cert files to use for TLS.
+- `clientCert` (string): the path to the client cert file to use for TLS.
+- `clientKey` (string): the path to the client key file to use for TLS.
+- `tlsServerName` (string): the server name to use as the SNI host when connecting via TLS.
+- `skipVerify` (bool): disables TLS host verification.
+- `token` (string): the ACL token to use when connecting to Nomad.
 
-* [Mixin Architecture](https://porter.sh/mixin-dev-guide/architecture/)
-* [Mixin Commands](https://porter.sh/mixin-dev-guide/commands/)
-* [Distributing Mixins](https://porter.sh/mixin-dev-guide/distribution/)
-
-Once ready for primetime, don't forget to revisit this `README.md` and update/replace it with details on your mixin.
-
-## Project Structure
-
-In the `cmd/skeletor` directory, you will find a cli built using [spf13/cobra](https://github.com/spf13/cobra). The CLI contains a go file for each basic capability a Mixin should implement:
-
-* build
-* schema
-* version
-* install
-* upgrade
-* invoke
-* uninstall
-
-Each of these command implementations have a corresponding Mixin implementation in the `pkg/skeletor` directory. Each of the commands above is wired into an empty implementation in `pkg/skeletor` that needs to be completed. In order to build a new Mixin, you need to complete these implementations with the relevant technology. For example, to build a [Cloud Formation](https://aws.amazon.com/cloudformation/) mixin, you might implement the methods in `pkg/skeletor` using the [AWS Go SDK](https://docs.aws.amazon.com/sdk-for-go/api/service/cloudformation/).
-
-## Provided capabilities
-
-This skeleton mixin project brings some free capabilities:
-
-### File System Access and Context
-
-Porter provides the [portercontext](https://porter.sh/src/pkg/portercontext) package that has helpful mechanisms for accessing the File System using [spf13/afero](https://github.com/spf13/afero). This makes it easy to provide mock File System implementations during testing. The portercontext package also provides a mechanism to encapsulate stdin, stdout and stderr so that they can easily be passed from `cmd/skeletor` code to implementing `pkg/skeletor` code.
-
-### Template and Static Asset Handling
-
-The project go:embed for dealing with static files, such as templates or other content that is best modeled outside of a Go file. You can see an example of this in `pkg/skeletor/schema.go`.
-
-### Basic Schema
-
-The project provides an implementation of the `skeletor schema` command that is mostly functional. To fully implement this for your mixin, you simply need to provide a valid JSON schema. For reference, consult `pkg/skeletor/schema/schema.json`.
-
-### Basic Tests
-
-The project provides some very basic test skeletons that you can use as a starting point for building tests for your mixin.
-
-### Magefile
-
-The project also includes a [Magefile] that is used to build, test, and publish the mixin.
-
-### Publish
-
-You must set the `GITHUB_TOKEN` environment variable with your personal access token in order to use the default publish target.
-
-Publish uploads cross-compiled binaries of your mixin to a GitHub release.
-You must set the `PORTER_RELEASE_REPOSITORY` environment variable to your GitHub repository name, e.g. github.com/YOURNAME/YOURREPO.
-There is a placeholder in the Publish magefile target where you can set that value.
-
-Create a tag, for example `git tag v0.1.0`, and push it to your repository.
-Run `mage XBuildAll Publish` to build your mixin and upload the binaries to the github release for that tag.
-If the commit is not tagged, the release is named "canary".
-
-If you want to generate a mixin feed file (atom.xml), edit the Publish magefile target, uncomment out the rest of the function, and set the `PORTER_PACKAGES_REMOTE` environment variable to a repository where the atom.xml file should be committed.
-For example, Porter uses github.com/getporter/packages for publishing our mixin feed.
-
-[Magefile]: https://magefile.org
+## Example Bundle
+See the [sample-bundle](./sample-bundle) directory for a bundle that uses the nomad mixin to run the official nomad [tutorial](https://developer.hashicorp.com/nomad/tutorials/get-started/gs-deploy-job). 
+The install step installs the jobs from the tutorial, and the uninstall step stops and purges the jobs. Remember to set NOMAD_ADDR to the address of your nomad server before running the bundle.
