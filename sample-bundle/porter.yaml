@@ -14,7 +14,7 @@ schemaVersion: 1.0.1
 name: nomad-bundle
 
 # Version of the bundle. Change this each time you modify a published bundle.
-version: 0.1.0
+version: 0.1.1
 
 # Description of the bundle and what it does.
 description: "An example bundle that uses Nomad"
@@ -25,13 +25,13 @@ registry: "localhost:5000"
 # Declare and optionally configure the mixins used by the bundle
 mixins:
   - nomad:
-      NOMAD_ADDR: "NOMAD_SERVER_ADDR_HERE"
+      NOMAD_ADDR: "http://123.456.78.9:4646" # don't forget the http://
 
 
 # Define the steps that should execute when the bundle is installed
 install:
   - nomad:
-      runs:
+      jobs:
       - path: nomad/pytechco-redis.nomad.hcl
       - path: nomad/pytechco-web.nomad.hcl
       - path: nomad/pytechco-setup.nomad.hcl
@@ -42,16 +42,11 @@ install:
 
 # Define the steps that should execute when the bundle is upgraded
 upgrade:
-  - exec:
-      description: "World 2.0"
-      command: ./helpers.sh
-      arguments:
-        - upgrade
 
 # Define the steps that should execute when the bundle is uninstalled
 uninstall:
   - nomad:
-      runs:
+      jobs:
         - stop: pytechco-employee
           purge: true
         - stop: pytechco-web
