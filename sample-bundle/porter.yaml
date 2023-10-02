@@ -14,7 +14,7 @@ schemaVersion: 1.0.1
 name: nomad-bundle
 
 # Version of the bundle. Change this each time you modify a published bundle.
-version: 0.1.7
+version: 0.1.8
 
 # Description of the bundle and what it does.
 description: "An example bundle that uses Nomad"
@@ -38,6 +38,9 @@ install:
           - name: redis-evalId
             key: evalId
       - path: nomad/pytechco-web.nomad.hcl
+        outputs:
+          - name: web-evalId
+            key: evalId
       - path: nomad/pytechco-setup.nomad.hcl
       - dispatch: pytechco-setup
         meta:
@@ -47,7 +50,14 @@ install:
       command: ./helpers.sh
       arguments:
         - echo
+        - "Redis evalId:"
         - ${bundle.outputs.redis-evalId}
+  - exec:
+      command: ./helpers.sh
+      arguments:
+        - echo
+        - "Web evalId:"
+        - ${bundle.outputs.web-evalId}
 
 # Define the steps that should execute when the bundle is upgraded
 upgrade:
@@ -69,5 +79,5 @@ uninstall:
 outputs:
   - name: redis-evalId
     type: string
-    applyTo:
-      - install
+  - name: web-evalId
+    type: string
