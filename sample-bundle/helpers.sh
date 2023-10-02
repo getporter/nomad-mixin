@@ -2,7 +2,7 @@
 set -euo pipefail
 
 echo() {
-  command echo $1 $2
+  command echo "$1" "$2"
 }
 
 # Call the requested function and pass the arguments as-is

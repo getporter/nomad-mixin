@@ -11,10 +11,10 @@ schemaType: Bundle
 schemaVersion: 1.0.1
 
 # Name of the bundle
-name: nomad-bundle
+name: nomad-example-bundle
 
 # Version of the bundle. Change this each time you modify a published bundle.
-version: 0.1.8
+version: 0.1.7
 
 # Description of the bundle and what it does.
 description: "An example bundle that uses Nomad"
@@ -79,5 +79,9 @@ uninstall:
 outputs:
   - name: redis-evalId
     type: string
+    applyTo:
+      - install
   - name: web-evalId
     type: string
+    applyTo:
+      - install

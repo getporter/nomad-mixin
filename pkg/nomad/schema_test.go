@@ -35,7 +35,8 @@ func TestMixin_ValidateSchema(t *testing.T) {
 		wantError string
 	}{
 		{"install", "testdata/step-input.yaml", ""},
-		{"invalid property", "testdata/invalid-input.yaml", "Additional property args is not allowed"},
+		{"invalid property", "testdata/invalid-job.yaml", "Additional property invalid is not allowed"},
+		{"invalid property", "testdata/invalid-nomad-prop.yaml", "Additional property jobber is not allowed"},
 	}
 
 	for _, tc := range testcases {

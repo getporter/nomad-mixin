@@ -45,24 +45,107 @@
       "description": "A step that is executed by the nomad mixin",
       "type": "object",
       "properties": {
-        "description": {
-          "description": "A description of the mixin step",
-          "type": "string"
-        },
-        "run": {
-          "description": "The name of the command to run",
-          "type": "string"
-        },
-        "meta": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
+        "jobs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "region": {
+                "type": "string"
+              },
+              "namespace": {
+                "type": "string"
+              },
+              "caCert": {
+                "type": "string"
+              },
+              "caPath": {
+                "type": "string"
+              },
+              "clientCert": {
+                "type": "string"
+              },
+              "clientKey": {
+                "type": "string"
+              },
+              "tlsServerName": {
+                "type": "string"
+              },
+              "tlsSkipVerify": {
+                "type": "boolean"
+              },
+              "token": {
+                "type": "string"
+              },
+              "outputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "key": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "key"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "dispatch": {
+                "type": "string"
+              },
+              "meta": {
+                "type": "object"
+              },
+              "idPrefixTemplate": {
+                "type": "string"
+              },
+              "payload": {
+                "type": "string"
+              },
+              "stop": {
+                "type": "string"
+              },
+              "purge": {
+                "type": "boolean"
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "path"
+                ]
+              },
+              {
+                "required": [
+                  "dispatch"
+                ]
+              },
+              {
+                "required": [
+                  "stop"
+                ]
+              }
+            ],
+            "additionalProperties": false
           }
         }
       },
       "required": [
-        "command"
-      ]
+        "jobs"
+      ],
+      "additionalProperties": false
     }
   },
   "type": "object",

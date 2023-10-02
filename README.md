@@ -60,7 +60,7 @@ The job step supports the following 3 actions which can be specified as a list i
 - `path`: runs a nomad job file using the given nomad hcl file.
 - `dispatch`: dispatches a parametrized nomad job using the given job name.
     - `meta`: (optional): a map of key/value pairs that will be passed as metadata to the nomad job.
-      - `idPrefixTemplate` (optional): a prefix added to dispatched job IDs.
+    - `idPrefixTemplate` (optional): a prefix added to dispatched job IDs.
     - `payload` (optional): base64 encoded string containng the payload to pass to the nomad job. Limited to 65536 bytes.
 - `stop`: stops a nomad job using the given job name.
     - `purge`: (optional): if set to true, the job will be purged immediately.
