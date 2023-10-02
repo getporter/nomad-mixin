@@ -1,3 +1,6 @@
 install:
   - nomad:
-      run: "fileman.hcl"
+      jobs:
+        - path: pytechco-redis.nomad.hcl
+        - dispatch: pytechco-setup
+        - stop: nomad/pytechco-employee.nomad.hcl

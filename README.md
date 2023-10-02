@@ -75,7 +75,7 @@ nomad run, overriding any global nomad parameters set earlier:
 - `clientCert` (string): the path to the client cert file to use for TLS.
 - `clientKey` (string): the path to the client key file to use for TLS.
 - `tlsServerName` (string): the server name to use as the SNI host when connecting via TLS.
-- `skipVerify` (bool): disables TLS host verification.
+- `tlsSkipVerify` (bool): disables TLS host verification.
 - `token` (string): the ACL token to use when connecting to Nomad.
 
 ## Example Bundle

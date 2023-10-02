@@ -12,7 +12,15 @@ type Nomad struct {
 	Jobs []Job `yaml:"jobs"`
 }
 
+type NomadOutput struct {
+	Name string `yaml:"name"`
+	Key  string `yaml:"key"`
+}
+
 type Job struct {
+	// outputs to be used in next steps of porter bundle
+	Outputs []NomadOutput `yaml:"outputs"`
+
 	// regular job run
 	Path string `yaml:"path,omitempty"`
 
@@ -44,7 +52,7 @@ type Job struct {
 
 func (m *Mixin) DoAction(action *Nomad) error {
 	for _, run := range action.Jobs {
-		err := validateRun(run)
+		err := validateJob(run)
 		if err != nil {
 			return err
 		}
@@ -57,19 +65,22 @@ func (m *Mixin) DoAction(action *Nomad) error {
 			return fmt.Errorf("unable to create nomad client: %w", err)
 		}
 
-		job, err := parseJob(&run)
-		if err != nil {
-			return fmt.Errorf("unable to parse job: %w", err)
-		}
-
+		evalId := ""
 		// do the actual nomad job run
 		if run.Path != "" {
 			// regular run
+			job, err := parseJob(&run)
+			if err != nil {
+				return fmt.Errorf("unable to parse job: %w", err)
+			}
 			jobRegResp, _, err := client.Jobs().Register(job, nil)
+			evalId = jobRegResp.EvalID
 			if err != nil {
 				return fmt.Errorf("unable to register job: %w", err)
 			}
 			fmt.Fprintf(m.Out, "Job registration succesful\nEvaluation ID: %s", jobRegResp.EvalID) //todo
+			// outputs
+			// eval id
 		} else if run.Dispatch != "" {
 			// dispatch run
 			jobDispResp, _, err := client.Jobs().Dispatch(run.Dispatch, run.Meta, []byte(run.Payload), run.IdPrefixTemplate, nil)
@@ -77,6 +88,9 @@ func (m *Mixin) DoAction(action *Nomad) error {
 				return fmt.Errorf("unable to dispatch job: %w", err)
 			}
 			fmt.Fprintf(m.Out, "Job dispatched successfully\nDispatched Job ID: %s\nEvaluation ID: %s", jobDispResp.DispatchedJobID, jobDispResp.EvalID) //todo
+			// outputs
+			// eval id
+			// dispatched job id
 		} else if run.Stop != "" {
 			// stop run
 			resp, _, err := client.Jobs().Deregister(run.Stop, run.Purge, nil)
@@ -84,15 +98,26 @@ func (m *Mixin) DoAction(action *Nomad) error {
 				return fmt.Errorf("unable to stop job: %w", err)
 			}
 			fmt.Fprintf(m.Out, "Job stopped successfully\n%s", resp)
+			// ourputs
+			// eval id
 		} else {
-			return errors.Errorf("unknown nomad run format, should either specify path, dispatch, stop")
+			return errors.Errorf("unknown nomad run format, should either specify path, dispatch or stop")
+		}
+		if evalId != "" {
+			for _, output := range run.Outputs {
+				fmt.Fprintf(m.Out, "\nWriting output %s to file %s", output.Key, output.Name)
+				err := m.WriteMixinOutputToFile(output.Name, []byte(evalId))
+				if err != nil {
+					return err
+				}
+			}
 		}
 		fmt.Fprintf(m.Out, "\n")
 	}
 	return nil
 }
 
-func validateRun(run Job) error {
+func validateJob(run Job) error {
 	// use below map as a set
 	check := map[string]int{run.Path: 1, run.Dispatch: 1, run.Stop: 1}
 	delete(check, "")

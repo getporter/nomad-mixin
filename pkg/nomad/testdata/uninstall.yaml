@@ -1,0 +1,41 @@
+uninstall:
+  - nomad:
+      jobs:
+        - path: "nomad/path"
+          address: "123"
+          region: "us-east-1"
+          namespace: "default"
+          caCert: "cert"
+          caPath: "path"
+          clientCert: "cert"
+          clientKey: "key"
+          tlsServerName: "name"
+          tlsSkipVerify: true
+          token: "token"
+        - dispatch: "dispatch"
+          meta:
+            budget: "200"
+          idPrefixTemplate: "prefix"
+          payload: "payload"
+          address: "123"
+          region: "us-east-1"
+          namespace: "default"
+          caCert: "cert"
+          caPath: "path"
+          clientCert: "cert"
+          clientKey: "key"
+          tlsServerName: "name"
+          tlsSkipVerify: true
+          token: "token"
+        - stop: "stop"
+          purge: true
+          address: "123"
+          region: "us-east-1"
+          namespace: "default"
+          caCert: "cert"
+          caPath: "path"
+          clientCert: "cert"
+          clientKey: "key"
+          tlsServerName: "name"
+          tlsSkipVerify: false
+          token: "token"

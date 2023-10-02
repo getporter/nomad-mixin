@@ -33,7 +33,7 @@ func parseUninstallAction(m *Mixin) (*Nomad, error) {
 		return nil, err
 	}
 	if len(action.Uninstalls) != 1 {
-		return nil, errors.Errorf("expected 1 installation steps, got %d", len(action.Uninstalls))
+		return nil, errors.Errorf("expected 1 uninstall steps, got %d", len(action.Uninstalls))
 	}
 	return &action.Uninstalls[0].Nomad, nil
 }

@@ -13,7 +13,6 @@ replace github.com/spf13/viper => github.com/getporter/viper v1.7.1-porter.2.0.2
 require (
 	get.porter.sh/magefiles v0.6.0
 	get.porter.sh/porter v1.0.15
-	github.com/getporter/skeletor v0.2.1
 	github.com/ghodss/yaml v1.0.0
 	github.com/hashicorp/nomad v1.6.2
 	github.com/hashicorp/nomad/api v0.0.0-20230927210134-859087640a74

@@ -37,4 +37,3 @@ func parseInstallAction(m *Mixin) (*Nomad, error) {
 	}
 	return &action.Install[0].Nomad, nil
 }
-

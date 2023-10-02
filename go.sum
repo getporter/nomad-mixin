@@ -183,8 +183,6 @@ github.com/frankban/quicktest v1.14.4/go.mod h1:4ptaffx2x8+WTWXmUCuVU6aPUX1/Mz7z
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
 github.com/fsnotify/fsnotify v1.6.0 h1:n+5WquG0fcWoWp6xPWfHdbskMCQaFnG6PfBrh1Ky4HY=
 github.com/fsnotify/fsnotify v1.6.0/go.mod h1:sl3t1tCWJFWoRz9R8WJCbQihKKwmorjAbSClcnxKAGw=
-github.com/getporter/skeletor v0.2.1 h1:gE4jg7kPrBfZ2dhXTWO7toqU8tOqK732jG+fS5OvVcQ=
-github.com/getporter/skeletor v0.2.1/go.mod h1:R2/XJ+aaTcE3YvXTsTPnDF+zoNPOilguZHtdDS7fFv4=
 github.com/getporter/viper v1.7.1-porter.2.0.20210514172839-3ea827168363 h1:OI6oF+tvVpVTDbIAbKYwDQlznmWJJNFgMSFxCbgxsME=
 github.com/getporter/viper v1.7.1-porter.2.0.20210514172839-3ea827168363/go.mod h1:TMyCLryAYE7EgeSfzTbjQLLiLkOjZeJuiFVGK5FYwog=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=

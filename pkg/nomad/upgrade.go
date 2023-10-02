@@ -33,7 +33,7 @@ func parseUpgradeAction(m *Mixin) (*Nomad, error) {
 		return nil, err
 	}
 	if len(action.Upgrade) != 1 {
-		return nil, errors.Errorf("expected 1 installation steps, got %d", len(action.Upgrade))
+		return nil, errors.Errorf("expected 1 upgrade steps, got %d", len(action.Upgrade))
 	}
 	return &action.Upgrade[0].Nomad, nil
 }
