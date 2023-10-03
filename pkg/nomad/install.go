@@ -2,9 +2,10 @@ package nomad
 
 import (
 	"context"
+	"io"
+
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v3"
-	"io"
 )
 
 type InstallAction struct {

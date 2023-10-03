@@ -3,6 +3,7 @@ package nomad
 import (
 	"context"
 	"fmt"
+
 	"get.porter.sh/porter/pkg/exec/builder"
 	"gopkg.in/yaml.v2"
 )
@@ -31,7 +32,6 @@ type BuildInput struct {
 //		# acl
 //		NOMAD_TOKEN: ""
 
-
 type MixinConfig struct {
 	ServerAddress string `yaml:"NOMAD_ADDR,omitempty"`
 	Region        string `yaml:"NOMAD_REGION,omitempty"`
@@ -45,7 +45,7 @@ type MixinConfig struct {
 	TLSServerName string `yaml:"NOMAD_TLS_SERVER_NAME,omitempty"`
 	SkipVerify    string `yaml:"NOMAD_SKIP_VERIFY,omitempty"`
 
-	Token         string `yaml:"NOMAD_TOKEN,omitempty"`
+	Token string `yaml:"NOMAD_TOKEN,omitempty"`
 }
 
 // Build will generate the necessary Dockerfile lines

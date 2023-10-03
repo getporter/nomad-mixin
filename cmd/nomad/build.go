@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ludfjig/nomad-mixin/pkg/nomad"
+	"github.com/getporter/nomad-mixin/pkg/nomad"
 	"github.com/spf13/cobra"
 )
 

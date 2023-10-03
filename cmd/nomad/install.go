@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/ludfjig/nomad-mixin/pkg/nomad"
+	"github.com/getporter/nomad-mixin/pkg/nomad"
 	"github.com/spf13/cobra"
 )
 
 func buildInstallCommand(m *nomad.Mixin) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "install",
-		Short: "Execute the install functionality of this mixin",
+		Short: "Execute the install functionality of this nomad mixin",
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			//Do something here if needed
 			return nil

@@ -2,7 +2,7 @@ package main
 
 import (
 	"get.porter.sh/porter/pkg/porter/version"
-	"github.com/ludfjig/nomad-mixin/pkg/nomad"
+	"github.com/getporter/nomad-mixin/pkg/nomad"
 	"github.com/spf13/cobra"
 )
 
@@ -11,7 +11,7 @@ func buildVersionCommand(m *nomad.Mixin) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "version",
-		Short: "Print the mixin verison",
+		Short: "Print the nomad mixin version",
 		PreRunE: func(cmd *cobra.Command, args []string) error {
 			return opts.Validate()
 		},

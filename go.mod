@@ -1,4 +1,4 @@
-module github.com/ludfjig/nomad-mixin
+module github.com/getporter/nomad-mixin
 
 go 1.21
 
@@ -16,6 +16,7 @@ require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/hashicorp/nomad v1.6.2
 	github.com/hashicorp/nomad/api v0.0.0-20230927210134-859087640a74
+	github.com/ludfjig/nomad-mixin v0.0.0-20231002234714-dc871c5196b8
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.4

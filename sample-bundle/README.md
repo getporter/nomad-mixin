@@ -1,10 +1,10 @@
 # Sample Nomad Bundle 
 
 To use this bundle first you need a nomad cluster up and running. To get a quick one up and running locally, 
-you can run 
+you can run (you might need to run as root depending on your environment):
 
 ```bash
-sudo nomad agent -dev \
+nomad agent -dev \
   -bind 0.0.0.0 \
   -network-interface='{{ GetDefaultInterfaces | attr "name" }}'
 ```

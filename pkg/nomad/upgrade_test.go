@@ -2,9 +2,10 @@ package nomad
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_parseUpgradeAction(t *testing.T) {

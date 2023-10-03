@@ -8,7 +8,7 @@ import (
 	"runtime/debug"
 
 	"get.porter.sh/porter/pkg/cli"
-	"github.com/ludfjig/nomad-mixin/pkg/nomad"
+	"github.com/getporter/nomad-mixin/pkg/nomad"
 	"github.com/spf13/cobra"
 	"go.opentelemetry.io/otel/attribute"
 )
