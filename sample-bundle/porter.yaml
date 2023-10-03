@@ -26,7 +26,7 @@ registry: "localhost:5000"
 mixins:
   - exec:
   - nomad:
-      NOMAD_ADDR: "http://IP_ADDRESS_HERE" # don't forget the http://
+      address: "http://IP_ADDRESS_HERE" # don't forget the http://
 
 
 # Define the steps that should execute when the bundle is installed

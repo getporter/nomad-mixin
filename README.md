@@ -22,21 +22,21 @@ itself:
 ```yaml
 mixins:
   - nomad:
-      NOMAD_ADDR: ""
-      NOMAD_REGION: ""
-      NOMAD_NAMESPACE: ""
-      NOMAD_HTTP_AUTH: ""
+      address: ""
+      region: ""
+      namespace: ""
+      httpAuth: ""
 
       # tls
-      NOMAD_CACERT: ""
-      NOMAD_CAPATH: ""
-      NOMAD_CLIENT_CERT: ""
-      NOMAD_CLIENT_KEY: ""
-      NOMAD_TLS_SERVER_NAME: ""
-      NOMAD_SKIP_VERIFY: ""
+      caCert: ""
+      caPath: ""
+      clientCert: ""
+      clientKey: ""
+      tlsServerName: ""
+      tlsSkipVerify:
 
       # acl
-      NOMAD_TOKEN: ""
+      token: ""
 ```
 
 To use the mixin in an Install/Upgrade/Uninstall step, add the "jobs" block to your porter.yaml file (using install here

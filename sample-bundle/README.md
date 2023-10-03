@@ -10,7 +10,7 @@ nomad agent -dev \
 ```
 
 Make note of the IP address of the nomad server, it should get output in the terminal after running the command. 
-Edit the NOMAD_ADDR in the porter.yaml file to match your cluster ip address. Don't forget the protocol (http) and port number.
+Edit the `address` in the porter.yaml in the mixin:nomad block file to match your cluster ip address. Don't forget the protocol (http) and port number.
 
 Next run `porter install` in this directory containing the porter.yaml. This will install the nomad jobs in the nomad/ subdirectory into your cluster.
 You can run `porter uninstall` to remove the jobs from the cluster.
