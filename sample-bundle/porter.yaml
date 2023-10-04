@@ -1,0 +1,91 @@
+# This is the configuration for Porter
+# You must define steps for each action, but the rest is optional
+# See https://getporter.org/bundle/manifest/file-format/ for a description of all the allowed fields in this document.
+# See https://getporter.org/author-bundles for documentation on how to configure your bundle.
+# Uncomment out the sections below to take full advantage of what Porter can do!
+
+# Optional indicator of the resource type of this file
+schemaType: Bundle
+
+# Version of the porter.yaml schema used by this file.
+schemaVersion: 1.0.1
+
+# Name of the bundle
+name: nomad-example-bundle
+
+# Version of the bundle. Change this each time you modify a published bundle.
+version: 0.1.0
+
+# Description of the bundle and what it does.
+description: "An example bundle that uses Nomad"
+
+# Registry where the bundle is published to by default
+registry: "localhost:5000"
+
+parameters:
+  - name: ip_address
+    type: string
+    description: "IP address of the Nomad server, including protocol and port"
+    env: NOMAD_ADDR
+
+# Declare and optionally configure the mixins used by the bundle
+mixins:
+  - exec:
+  - nomad:
+
+# Define the steps that should execute when the bundle is installed
+install:
+  - nomad:
+      jobs:
+      - path: nomad/pytechco-redis.nomad.hcl
+        outputs:
+          - name: redis-evalId
+            key: evalId
+      - path: nomad/pytechco-web.nomad.hcl
+        outputs:
+          - name: web-evalId
+            key: evalId
+      - path: nomad/pytechco-setup.nomad.hcl
+      - dispatch: pytechco-setup
+        meta:
+          budget: "200"
+      - path: nomad/pytechco-employee.nomad.hcl
+  - exec:
+      command: ./helpers.sh
+      arguments:
+        - echo
+        - "Redis evalId:"
+        - ${bundle.outputs.redis-evalId}
+  - exec:
+      command: ./helpers.sh
+      arguments:
+        - echo
+        - "Web evalId:"
+        - ${bundle.outputs.web-evalId}
+
+# Define the steps that should execute when the bundle is upgraded
+upgrade:
+
+# Define the steps that should execute when the bundle is uninstalled
+uninstall:
+  - nomad:
+      jobs:
+        - stop: pytechco-employee
+          purge: true
+        - stop: pytechco-web
+          purge: true
+        - stop: pytechco-redis
+          purge: true
+        - stop: pytechco-setup
+          purge: true
+
+
+outputs:
+  - name: redis-evalId
+    type: string
+    applyTo:
+      - install
+  - name: web-evalId
+    type: string
+    applyTo:
+      - install

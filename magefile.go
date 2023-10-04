@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	mixinName    = "skeletor"
-	mixinPackage = "github.com/getporter/skeletor"
+	mixinName    = "nomad"
+	mixinPackage = "github.com/getporter/nomad-mixin"
 	mixinBin     = "bin/mixins/" + mixinName
 )
 

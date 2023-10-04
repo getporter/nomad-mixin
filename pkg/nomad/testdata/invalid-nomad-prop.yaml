@@ -1,0 +1,54 @@
+install:
+  - nomad:
+      jobber:
+      jobs:
+      - path: ""
+        address: ""
+        region: ""
+        namespace: ""
+        caCert: ""
+        caPath: ""
+        clientCert: ""
+        clientKey: ""
+        tlsServerName: ""
+        tlsSkipVerify: false
+        token: ""
+        outputs:
+          - name: redis-evalId
+            key: evalId
+
+      - dispatch: ""
+        meta:
+          budget: "200"
+        idPrefixTemplate: ""
+        payload: ""
+        address: ""
+        region: ""
+        namespace: ""
+        caCert: ""
+        caPath: ""
+        clientCert: ""
+        clientKey: ""
+        tlsServerName: ""
+        tlsSkipVerify: false
+        token: ""
+        outputs:
+          - name: ""
+            key: evalId
+
+      - stop: ""
+        purge: true
+        address: ""
+        region: ""
+        namespace: ""
+        caCert: ""
+        caPath: ""
+        clientCert: ""
+        clientKey: ""
+        tlsServerName: ""
+        tlsSkipVerify: false
+        token: ""
+        outputs:
+          - name: ""
+            key: evalId
+
