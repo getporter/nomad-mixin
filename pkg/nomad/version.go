@@ -4,7 +4,7 @@ import (
 	"get.porter.sh/porter/pkg/mixin"
 	"get.porter.sh/porter/pkg/pkgmgmt"
 	"get.porter.sh/porter/pkg/porter/version"
-	"github.com/ludfjig/nomad-mixin/pkg"
+	"github.com/getporter/nomad-mixin/pkg"
 )
 
 func (m *Mixin) PrintVersion(opts version.Options) error {

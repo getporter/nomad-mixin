@@ -6,7 +6,7 @@ import (
 
 	"get.porter.sh/porter/pkg/porter/version"
 	"get.porter.sh/porter/pkg/printer"
-	"github.com/ludfjig/nomad-mixin/pkg"
+	"github.com/getporter/nomad-mixin/pkg"
 	"github.com/stretchr/testify/require"
 )
 

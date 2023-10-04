@@ -11,7 +11,7 @@ import (
 
 const (
 	mixinName    = "nomad"
-	mixinPackage = "github.com/ludfjig/nomad-mixin"
+	mixinPackage = "github.com/getporter/nomad-mixin"
 	mixinBin     = "bin/mixins/" + mixinName
 )
 
