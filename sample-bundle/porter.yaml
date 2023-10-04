@@ -22,12 +22,16 @@ description: "An example bundle that uses Nomad"
 # Registry where the bundle is published to by default
 registry: "localhost:5000"
 
+parameters:
+  - name: ip_address
+    type: string
+    description: "IP address of the Nomad server, including protocol and port"
+    env: NOMAD_ADDR
+
 # Declare and optionally configure the mixins used by the bundle
 mixins:
   - exec:
   - nomad:
-      address: "http://IP_ADDRESS_HERE" # don't forget the http://
-
 
 # Define the steps that should execute when the bundle is installed
 install:
