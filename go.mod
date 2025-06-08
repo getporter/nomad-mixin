@@ -1,6 +1,6 @@
 module github.com/getporter/nomad-mixin
 
-go 1.23.0
+go 1.23.9
 
 // These are replace directives copied from porter
 // When you use a newer version of Porter, if you run into trouble with go mod tidy
@@ -138,4 +138,5 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/op/go-logging.v1 v1.0.0-20160211212156-b2cb9fa56473 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gotest.tools/v3 v3.5.0 // indirect
 )
