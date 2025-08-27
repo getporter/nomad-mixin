@@ -2,9 +2,10 @@ package nomad
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/hashicorp/nomad/api"
-	"github.com/hashicorp/nomad/jobspec"
+	"github.com/hashicorp/nomad/jobspec2"
 )
 
 type Nomad struct {
@@ -162,7 +163,12 @@ func validateJob(run Job) error {
 
 // parseJob parses a nomad job file
 func parseJob(filepath string) (*api.Job, error) {
-	job, err := jobspec.ParseFile(filepath)
+	f, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	job, err := jobspec2.Parse(filepath, f)
 	return job, err
 }
 
